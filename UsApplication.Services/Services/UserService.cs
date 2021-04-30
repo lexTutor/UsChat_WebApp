@@ -27,17 +27,22 @@ namespace UsApplication.Implementation.Services
         {
              var response = new Response<ReturnUserDTO>();
             var userToAdd = _mapper.Map<User>(user);
+            if (await _userManager.FindByEmailAsync(user.Email) != null)
+            {
+                response.Message = "Email has been used";
+                return response;
+            }
             var result = await _userManager.CreateAsync(userToAdd, user.Password);
 
             if (result.Succeeded)
             {
                 response.Data = _mapper.Map<ReturnUserDTO>(userToAdd);
                 response.Success = true;
-                response.Message = "Not added";
+                response.Message = "Added successfully";
                 return response;
             }
 
-            response.Message = "Not Added";
+            response.Message = "Not Added, try a different user name";
             return response;
         }
 

@@ -20,7 +20,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import UserDetails from './UserDetails';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Card, TextField, Button } from '@material-ui/core';
 import ChatDiv from '../StyledComponents/ChatDiv';
 //import AuthContext from './AuthContext';
@@ -143,6 +143,7 @@ export default function Dashboard() {
     const [chatWith, setChatWith] = React.useState("");
     const { Id } = useParams();
     const [recieved, setrecieved] = React.useState(null);
+    const history = useHistory();
     //const { isAuthenticated, SetAuthenticated } = useContext(AuthContext);
     const hubConnection = new signalR.HubConnectionBuilder().withUrl(`/ChatHub/${Id}`, 
         {
@@ -164,10 +165,15 @@ export default function Dashboard() {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${Id}`
           },
-        }).then((res) => {
+      }).then((res) => {
             return res.json();
-        }).then((data) => {
-            setData(data.data);
+      }).then((data) => {
+          if (data.success === false) {
+              history.push("")
+          }
+          else {
+              setData(data.data);
+          }
         });
     },
         [Update]);

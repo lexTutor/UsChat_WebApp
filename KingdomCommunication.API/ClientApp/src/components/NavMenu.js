@@ -28,9 +28,6 @@ export default function NavMenu() {
                             <NavItem>
                                 <NavLink tag={Link} className="text-dark" to="/SignUp">SignUp</NavLink>
                             </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} className="text-dark" to="/Weather">Weather</NavLink>
-                            </NavItem>
                         </ul>
                     </Collapse>
                 </Container>
