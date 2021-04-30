@@ -1,0 +1,15 @@
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\bin\Debug\netcoreapp3.1\Us.DataAccess.deps.json
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\bin\Debug\netcoreapp3.1\Us.DataAccess.runtimeconfig.json
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\bin\Debug\netcoreapp3.1\Us.DataAccess.runtimeconfig.dev.json
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\bin\Debug\netcoreapp3.1\Us.DataAccess.dll
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\bin\Debug\netcoreapp3.1\Us.DataAccess.pdb
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\bin\Debug\netcoreapp3.1\UsApplication.Models.dll
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\bin\Debug\netcoreapp3.1\UsApplication.Models.pdb
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\obj\Debug\netcoreapp3.1\Us.DataAccess.csprojAssemblyReference.cache
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\obj\Debug\netcoreapp3.1\Us.DataAccess.AssemblyInfoInputs.cache
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\obj\Debug\netcoreapp3.1\Us.DataAccess.AssemblyInfo.cs
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\obj\Debug\netcoreapp3.1\Us.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\obj\Debug\netcoreapp3.1\Us.DataAccess.csproj.CopyComplete
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\obj\Debug\netcoreapp3.1\Us.DataAccess.dll
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\obj\Debug\netcoreapp3.1\Us.DataAccess.pdb
+C:\Users\hp\source\repos\KingdomCommunication.API\Us.DataAccess\obj\Debug\netcoreapp3.1\Us.DataAccess.genruntimeconfig.cache

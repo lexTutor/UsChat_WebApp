@@ -1,0 +1,12 @@
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\bin\Debug\netcoreapp3.1\UsApplication.DTOs.deps.json
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\bin\Debug\netcoreapp3.1\UsApplication.DTOs.dll
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\bin\Debug\netcoreapp3.1\UsApplication.DTOs.pdb
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\bin\Debug\netcoreapp3.1\UsApplication.Models.dll
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\bin\Debug\netcoreapp3.1\UsApplication.Models.pdb
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\obj\Debug\netcoreapp3.1\UsApplication.DTOs.csprojAssemblyReference.cache
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\obj\Debug\netcoreapp3.1\UsApplication.DTOs.AssemblyInfoInputs.cache
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\obj\Debug\netcoreapp3.1\UsApplication.DTOs.AssemblyInfo.cs
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\obj\Debug\netcoreapp3.1\UsApplication.DTOs.csproj.CoreCompileInputs.cache
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\obj\Debug\netcoreapp3.1\UsApplication.DTOs.csproj.CopyComplete
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\obj\Debug\netcoreapp3.1\UsApplication.DTOs.dll
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.DTOs\obj\Debug\netcoreapp3.1\UsApplication.DTOs.pdb
