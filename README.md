@@ -1,1 +1,1 @@
-# UsChat_WebApp
+# UsChat Web application
