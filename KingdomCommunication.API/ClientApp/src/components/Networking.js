@@ -38,7 +38,7 @@ const  MainListItems = ({handleSearch }= this.props) => {
                 required
                 fullWidth
                 name="search"
-                label="search"
+                label="search a user"
                 type="search"
                 id="search"
                 required
@@ -53,7 +53,7 @@ const  MainListItems = ({handleSearch }= this.props) => {
                 onClick={() => handleSearch(Search)}
                 style={{ backgroundColor: "#1f2667bf" }}
             >
-                Add
+                Add To Network
        </Button>
             </>);
   };

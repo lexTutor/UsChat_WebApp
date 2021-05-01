@@ -67,10 +67,11 @@ export default function SignInSide() {
     const [UserName, setUserName] = useState("");
     const [PhoneNumber, setPhoneNumber] = useState("");
     const [Password, setPassword] = useState("");
+    const [ConfirmPassword, setConfirmPassword] = useState("");
     const history = useHistory();
 
     const handleSubmit = (e) => {
-        let data = { UserName: UserName, Email: Email, PhoneNumber: PhoneNumber, Password: Password }
+        let data = { UserName: UserName, Email: Email, PhoneNumber: PhoneNumber, Password: Password, ConfirmPassword: ConfirmPassword}
         e.preventDefault();
         fetch("user/add", {
             method: "POST",
@@ -84,7 +85,6 @@ export default function SignInSide() {
                 return;
             }
             else {
-                console.log(data);
                 history.push(``);
             }
         });
@@ -103,6 +103,9 @@ export default function SignInSide() {
                 break;
             case "password":
                 setPassword(e.target.value);
+                break;
+            case "confirm-password":
+                setConfirmPassword(e.target.value);
                 break;
             default:
                 break;
@@ -156,7 +159,7 @@ export default function SignInSide() {
                             required
                             fullWidth
                             name="phoneNumber"
-                            label="PhoneNumber"
+                            label="+23456789106589"
                             type="phoneNumber"
                             id="phoneNumber"
                             autoComplete="phoneNumber"
@@ -173,6 +176,18 @@ export default function SignInSide() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            required
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="Confirm Password"
+                            label="Confirm Password"
+                            type="password"
+                            id="confirm-password"
                             required
                             onChange={handleChange}
                         />

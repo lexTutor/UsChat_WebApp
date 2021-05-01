@@ -19,6 +19,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import PersonIcon from '@material-ui/icons/Person';
 import UserDetails from './UserDetails';
 import { useParams, useHistory } from 'react-router-dom';
 import { Card, TextField, Button } from '@material-ui/core';
@@ -290,19 +291,24 @@ export default function Dashboard() {
                         <ChevronRightIcon />
                     </IconButton>}
                 </div>
-                <List> {<MainListItems handleSearch={handleSearch} />}
+                <List> {<MainListItems handleSearch={handleSearch}/>}
                 </List>
                 <Divider />
-                <h6> My Network</h6>
+                <ListItem>
+                    <ListItemIcon>
+                        <DashboardIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="My Network" />
+                </ListItem>
 
                 {Data.connections && <List>{Data.connections.map((data) => (
                     <ListItem key={data.userId_To} >
                         <ListItemIcon>
-                            <DashboardIcon />
+                            <PersonIcon />
                         </ListItemIcon>
-                        {(Data.userName !== data.userName_To) &&
+                        {(Data.username !== data.userName_To) &&
                             <ListItemText primary={data.userName_To} onClick={() => handleConnect(data.userId_To, data.userId_From)}></ListItemText>}
-                        {(Data.userName !== data.userName_From) &&
+                        {(Data.username !== data.userName_From) &&
                             <ListItemText primary={data.userName_From} onClick={() => handleConnect(data.userId_To, data.userId_From)}></ListItemText>}
                     </ListItem>
                 ))}</List>}
@@ -345,9 +351,6 @@ export default function Dashboard() {
                             </Paper>
                         </Grid>
                     </Grid>
-                    <Box pt={4}>
-                        <Copyright />
-                    </Box>
                 </Container>
             </main>
         </div>

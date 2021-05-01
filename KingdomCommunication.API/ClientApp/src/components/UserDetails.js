@@ -17,7 +17,7 @@ export default function UserDetails({ data } = this.props) {
         <React.Fragment>
             <Title>Welcome</Title>
             <Typography component="p" variant="h4">
-                {data.userName}
+                {data.username}
       </Typography>
             <Typography color="textSecondary" className={classes.depositContext}>
                 {today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()}
