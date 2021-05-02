@@ -43,6 +43,7 @@ namespace KingdomCommunication.API
             services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentityConfiguring();
             services.DInjections();
+            services.AddConfigureSettings(Configuration);
 
             services.AddCors();
             services.UseJWTAuthentication();

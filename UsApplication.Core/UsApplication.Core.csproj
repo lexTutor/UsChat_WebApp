@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.15.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\UsApplication.DTOs\UsApplication.DTOs.csproj" />
     <ProjectReference Include="..\UsApplication.Models\UsApplication.Models.csproj" />
   </ItemGroup>

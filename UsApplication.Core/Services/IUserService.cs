@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace UsApplication.Core.Services
         Task<Response<ReturnUserDTO>> GetUser(string userId);
         Task<Response<string>> Login(LoginUserDTO user);
         Task<bool> DeleteUser(string Id);
-
+        Task<bool> UploadImage(IFormFile image, string Id);
         Task<Response<ReturnUserDTO>> AddUser(ReceiveUserDTO user);
 
         Task<bool> EditUser(ReceiveUserDTO user, string Id);

@@ -43,18 +43,15 @@ namespace KingdomCommunication.API.Controllers
 
         [HttpPost]
         [Route("{Id}")]
-        public async Task<IActionResult> Add(ReceiveMessageDTO message, string Id)
+        public async Task<IActionResult> Add(ReceiveMessageDTO message)
         {
-           var user = await _userManager.FindByIdAsync(Id);
            var userTo = await _userManager.FindByIdAsync(message.userToId);
 
            var result = await _messageService.AddMessage(message);
 
-            var name = HttpContext.User.Identity.Name;
            await _hubContext.Clients.GroupExcept(HttpContext.User.Identity.Name, HttpContext.Connection.Id).SendAsync("ReceieveMessage", message);
             
            await _hubContext.Clients.Group(userTo.Id).SendAsync("ReceieveMessage", message);
-
             
             if (!result.Success)
                 return BadRequest(result);

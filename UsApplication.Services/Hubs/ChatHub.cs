@@ -16,11 +16,9 @@ namespace UsApplication.Implementation.Hubs
         }
         public async Task SendMessageAsync(string userName, string message)
         {
-            
              await  Clients.Group(userName).SendAsync("ReceieveMessage", message);
              await Clients.OthersInGroup(Context.User.Identity.Name).SendAsync("ReceieveMessage", message);
         }
 
-      
     }
 }

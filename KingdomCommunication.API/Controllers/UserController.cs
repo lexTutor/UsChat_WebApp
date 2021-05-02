@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -7,7 +9,6 @@ using UsApplication.DTOs;
 
 namespace KingdomCommunication.API.Controllers
 {
-
     [ApiController]
     [Route("[controller]/[action]")]
     public class UserController: ControllerBase
@@ -20,6 +21,7 @@ namespace KingdomCommunication.API.Controllers
 
         [HttpGet]
         [Route("{email}/{password}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(string email, string password)
         {
            var result = await _userService.Login(new LoginUserDTO { EmailAddress = email, Password = password});
@@ -34,6 +36,17 @@ namespace KingdomCommunication.API.Controllers
         {
             var result = await _userService.GetUser(Id);
             if (!result.Success)
+                return BadRequest(result);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("{Id}")]
+        public async Task<IActionResult> Image(IFormFile image, string Id)
+        {
+            var files = Request;
+            var result = await _userService.UploadImage(image, Id);
+            if (!result)
                 return BadRequest(result);
             return Ok(result);
         }

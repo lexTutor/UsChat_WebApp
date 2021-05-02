@@ -146,11 +146,12 @@ export default function Dashboard() {
     const [recieved, setrecieved] = React.useState(null);
     const history = useHistory();
     //const { isAuthenticated, SetAuthenticated } = useContext(AuthContext);
-    const hubConnection = new signalR.HubConnectionBuilder().withUrl(`/ChatHub/${Id}`, 
+    const hubConnection = new signalR.HubConnectionBuilder().withUrl(`/ChatHub/${Id}`,
         {
-            accessTokenFactory :() => {
+            accessTokenFactory: () => {
                 return `${Id}`;
-            }}).build();
+            }
+        }).build();
 
 
     useEffect(() => {
@@ -160,21 +161,21 @@ export default function Dashboard() {
 
     useEffect(() => {
         hubConnection.start();
-      fetch(`user/get/${Id}`, {
+        fetch(`user/get/${Id}`, {
             method: "GET",
-          headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${Id}`
-          },
-      }).then((res) => {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${Id}`
+            },
+        }).then((res) => {
             return res.json();
-      }).then((data) => {
-          if (data.success === false) {
-              history.push("")
-          }
-          else {
-              setData(data.data);
-          }
+        }).then((data) => {
+            if (data.success === false) {
+                history.push("")
+            }
+            else {
+                setData(data.data);
+            }
         });
     },
         [Update]);
@@ -205,7 +206,7 @@ export default function Dashboard() {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${Id}`
-                      },
+            },
         }).then((res) => {
             return res.json();
         }).then((data) => {
@@ -227,7 +228,7 @@ export default function Dashboard() {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${Id}`
-                                    },
+            },
             body: JSON.stringify(obj),
         }).then((res) => {
             if (!res.ok) { return; }
@@ -251,7 +252,7 @@ export default function Dashboard() {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${Id}`
-                    },
+            },
             body: JSON.stringify(obj),
         }).then((res) => {
             if (!res.ok) { return; }
@@ -267,7 +268,7 @@ export default function Dashboard() {
         });
     }
 
-    hubConnection.on("ReceieveMessage",  (message) => {
+    hubConnection.on("ReceieveMessage", (message) => {
         setrecieved(message);
     });
 
@@ -282,7 +283,7 @@ export default function Dashboard() {
                     paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
                 }}
                 open={open}
-                >
+            >
                 <div className={classes.toolbarIcon}>
                     {open && <IconButton onClick={handleDrawerClose}>
                         <ChevronLeftIcon />
@@ -291,7 +292,7 @@ export default function Dashboard() {
                         <ChevronRightIcon />
                     </IconButton>}
                 </div>
-                <List> {<MainListItems handleSearch={handleSearch}/>}
+                <List> {<MainListItems handleSearch={handleSearch} />}
                 </List>
                 <Divider />
                 <ListItem>
@@ -306,10 +307,13 @@ export default function Dashboard() {
                         <ListItemIcon>
                             <PersonIcon />
                         </ListItemIcon>
-                        {(Data.username !== data.userName_To) &&
+                        {(Data.username.toLowerCase() !== data.userName_To.toLowerCase()) &&
                             <ListItemText primary={data.userName_To} onClick={() => handleConnect(data.userId_To, data.userId_From)}></ListItemText>}
-                        {(Data.username !== data.userName_From) &&
+                        {(Data.username.toLowerCase() !== data.userName_From.toLowerCase()) &&
                             <ListItemText primary={data.userName_From} onClick={() => handleConnect(data.userId_To, data.userId_From)}></ListItemText>}
+                        {console.log(Data.userName)}
+                        {console.log(data.userName_To)}
+                        {console.log(data.userName_From)}
                     </ListItem>
                 ))}</List>}
                 <Divider />
@@ -346,7 +350,7 @@ export default function Dashboard() {
                             </Card>
                         </Grid>
                         <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
+                            <Paper className={fixedHeightPaper} style={{ width: "200px", height: "350px" }}>
                                 <UserDetails data={Data} />
                             </Paper>
                         </Grid>

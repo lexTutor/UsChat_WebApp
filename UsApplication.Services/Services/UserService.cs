@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,12 +16,14 @@ namespace UsApplication.Implementation.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly IConnectionRepository _connectionRepository;
+        private readonly IImageService _imageService;
         private readonly IMapper _mapper;
 
         public UserService(IServiceProvider serviceProvider)
         {
             _userManager = serviceProvider.GetRequiredService<UserManager<User>>();
             _connectionRepository = serviceProvider.GetRequiredService<IConnectionRepository>();
+            _imageService = serviceProvider.GetRequiredService<IImageService>();
             _mapper = serviceProvider.GetRequiredService<IMapper>();
         }
         public async Task<Response<ReturnUserDTO>> AddUser(ReceiveUserDTO user)
@@ -111,6 +114,22 @@ namespace UsApplication.Implementation.Services
 
             return response;
         }
+
+        public async Task<bool> UploadImage(IFormFile image, string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            var result = await _imageService.UploadImage(image);
+            if (result == null)
+                return false;
+            if(result.Error == null)
+            {
+                user.ImageUrl = result.Url.ToString();
+               await _userManager.UpdateAsync(user);
+                return true;
+            }
+            return false;
+        }
+
 
         private async Task<ICollection<ReturnConnectionDTO>> GetConnections(string id)
         {
