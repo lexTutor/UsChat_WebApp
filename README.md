@@ -28,3 +28,8 @@ A chat application that allows users to Sign-up, Login and chat with friends and
 * Postman: used to fire the endpoints
 * C#: The beautiful language that makes it all possible.
 ```
+
+- Bullet list
+              - Nested bullet
+                  - Sub-nested bullet etc
+          - Bullet list item 2 
