@@ -16,7 +16,7 @@ A chat application that allows users to Sign-up, Login and chat with friends and
 
 ## Technologies used in this project include:
 ```python
-* Visual Studio IDE.
+- Visual Studio IDE.
 * ASP.NET Core API and Class Library Projects.
 * React.js with hooks.
 * Entity Framework Core: an object-relational mapper which enables developers to work with data using objects of domain specific classes without focusing on the underlying database where this data is stored.
