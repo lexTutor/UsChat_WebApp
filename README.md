@@ -11,7 +11,7 @@ Login with the email and password
 Upload your profile picture
 Add an already existing user as a connection.
 Chat away.
-  *NB: Messages are saved offline so you never loose your chat history.
+  NB: Messages are saved offline so you never loose your chat history.
 ```
 
 ## Technologies used in this project include:
