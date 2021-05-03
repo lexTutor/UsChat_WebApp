@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -190,6 +189,24 @@ export default function Dashboard() {
         }
     }, [recieved])
 
+    const handleReload = () => {
+        fetch(`user/get/${Id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${Id}`
+            },
+        }).then((res) => {
+            return res.json();
+        }).then((data) => {
+            if (data.success === false) {
+            }
+            else {
+                setData(data.data);
+            }
+        });
+    }
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -246,26 +263,31 @@ export default function Dashboard() {
     }
 
     const SendMessage = () => {
-        let obj = { userFromId: Id, userToId: chatWith, MessageDetails: newMessage }
-        fetch(`message/add/${Id}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${Id}`
-            },
-            body: JSON.stringify(obj),
-        }).then((res) => {
-            if (!res.ok) { return; }
-            return res.json();
-        }).then((data) => {
-            if (data === null || data === undefined) {
-                alert("Message not sent")
-                return;
-            }
-            else {
-                setNewMessage("");
-            }
-        });
+        if (chatWith !== "" && chatWith !== null) {
+            let obj = { userFromId: Id, userToId: chatWith, MessageDetails: newMessage }
+            fetch(`message/add/${Id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${Id}`
+                },
+                body: JSON.stringify(obj),
+            }).then((res) => {
+                if (!res.ok) { return; }
+                return res.json();
+            }).then((data) => {
+                if (data === null || data === undefined) {
+                    alert("Message not sent")
+                    return;
+                }
+                else {
+                    setNewMessage("");
+                }
+            });
+        }
+        else {
+            alert("select a connection to send a message");
+        }
     }
 
     hubConnection.on("ReceieveMessage", (message) => {
@@ -350,8 +372,8 @@ export default function Dashboard() {
                             </Card>
                         </Grid>
                         <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper} style={{ width: "200px", height: "350px" }}>
-                                <UserDetails data={Data} />
+                            <Paper className={fixedHeightPaper} style={{ width: "200px", height: "400px" }}>
+                                <UserDetails data={Data} OnReload={handleReload}/>
                             </Paper>
                         </Grid>
                     </Grid>

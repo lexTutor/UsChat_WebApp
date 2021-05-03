@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
 import { Button } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 
 const useStyles = makeStyles({
@@ -12,7 +11,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function UserDetails({ data } = this.props) {
+export default function UserDetails({ data, OnReload } = this.props) {
     const classes = useStyles();
     var today = new Date();
     const [image, setImage] = useState();
@@ -37,9 +36,14 @@ export default function UserDetails({ data } = this.props) {
                 return res.json();
             }).then((obj) => {
                 if (obj === null || obj === undefined) {
+                    setImage(null);
                     return;
                 }
                 else {
+                    setImage(null);
+                    setTimeout(() => {
+                        OnReload();
+                    }, 8000);
                 }
             });
         }
@@ -59,7 +63,6 @@ export default function UserDetails({ data } = this.props) {
                 id="image"
                 type="file"
                 style={{ display:'None' }}
-                ref={fileInput => fileInput = fileInput}
                 onChange={handleChange}
             />
             <AddAPhotoIcon
@@ -70,6 +73,7 @@ export default function UserDetails({ data } = this.props) {
                 >
                 Select Image
             </AddAPhotoIcon>
+            {image && <label>{image.name}</label>}
             <Button
                 size="small"
                 variant="contained"
