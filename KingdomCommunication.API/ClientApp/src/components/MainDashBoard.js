@@ -1,6 +1,5 @@
-﻿import React, { useEffect, useContext } from 'react';
+﻿import React, { useEffect} from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -26,10 +25,6 @@ import * as signalR from "@microsoft/signalr";
 import { useStyles} from './Styles';
 
 
-const drawerWidth = 240;
-
-
-
 export default function Dashboard() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
@@ -42,6 +37,9 @@ export default function Dashboard() {
     const [recieved, setrecieved] = React.useState(null);
     const [notification, setNotification] = React.useState(null);
     const history = useHistory();
+
+    //Creates an instance of the hub connection
+    //The accessTokenFactory is the authentication required serving as a JWT token.
     const hubConnection = new signalR.HubConnectionBuilder().withUrl(`/ChatHub/${Id}`,
         {
             accessTokenFactory: () => {
@@ -50,32 +48,20 @@ export default function Dashboard() {
         }).build();
 
 
+    //Enables the message to to render after state change due to the latency of state change
     useEffect(() => {
 
     }, [messages]);
 
-
+    //Fetches the user data with the user Id when the component is rendered and when there is an upate such as picture upload
     useEffect(() => {
+        //Starts the hub connection
         hubConnection.start();
-        fetch(`user/get/${Id}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${Id}`
-            },
-        }).then((res) => {
-            return res.json();
-        }).then((data) => {
-            if (data.success === false) {
-                history.push("")
-            }
-            else {
-                setData(data.data);
-            }
-        });
+        LoadUserData();
     },
         [Update]);
 
+    //Renders the component and updates the latest message
     useEffect(() => {
 
         if (recieved !== null)
@@ -94,7 +80,8 @@ export default function Dashboard() {
         }
     }, [recieved])
 
-    const handleReload = () => {
+    //Private methos to fetch the user data
+    const LoadUserData = () => {
         fetch(`user/get/${Id}`, {
             method: "GET",
             headers: {
@@ -112,14 +99,22 @@ export default function Dashboard() {
         });
     }
 
+    //Responsible for reloading r=the page when necessary
+    const handleReload = () => {
+        LoadUserData();
+    }
+
+    //Sets the state of the drwaer to open
     const handleDrawerOpen = () => {
         setOpen(true);
     };
 
+    //Sets the state of the drwaer to close
     const handleDrawerClose = () => {
         setOpen(false);
     };
 
+    //Fetches all the messages between two connections
     const handleConnect = (id1, id2) => {
         let withId = Id === id1 ? id2 : id1;
         setChatWith(withId);
@@ -141,6 +136,7 @@ export default function Dashboard() {
         });
     }
 
+    //Checks for the existence of a userName in and adds the person as a connection if found
     const handleSearch = (search) => {
         let obj = { UserName_To: search }
         fetch(`connection/add/${Id}`, {
@@ -161,10 +157,12 @@ export default function Dashboard() {
         });
     };
 
+    //Handles changes when typing message
     const handleChange = (e) => {
         setNewMessage(e.target.value);
     }
 
+    //Posts a message to the database and the other user if connected with SignalR
     const SendMessage = () => {
         if (chatWith !== "" && chatWith !== null) {
             let obj = { userFromId: Id, userToId: chatWith, MessageDetails: newMessage, username: Data.username }
@@ -193,6 +191,7 @@ export default function Dashboard() {
         }
     }
 
+    //Triggers whenever the present connection recieves a message
     hubConnection.on("ReceieveMessage", (message) => {
         setrecieved(message);
     });
