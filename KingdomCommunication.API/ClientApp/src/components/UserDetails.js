@@ -9,6 +9,9 @@ const useStyles = makeStyles({
     depositContext: {
         flex: 1,
     },
+    cusor :{
+        cursor: "pointer"
+    }
 });
 
 export default function UserDetails({ data, OnReload } = this.props) {
@@ -66,7 +69,7 @@ export default function UserDetails({ data, OnReload } = this.props) {
                 onChange={handleChange}
             />
             <AddAPhotoIcon
-                button
+                className={classes.cursor}
                 size="medium"
                 variant="contained"
                 onClick={handleCameraclick}

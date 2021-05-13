@@ -12,6 +12,7 @@ namespace UsApplication.DTOs
 
         public string userToId { get; set; }
         public string userFromId { get; set; }
+        public string username { get; set; }
 
     }
 }

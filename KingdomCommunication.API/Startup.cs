@@ -1,29 +1,25 @@
 using KingdomCommunication.API.Extensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Security.Claims;
 using Us.DataAccess;
 using UsApplication.Implementation.Hubs;
-using UsApplication.Models;
 
 namespace KingdomCommunication.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _hostEnvironment;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment hostEnvironment)
         {
             Configuration = configuration;
+            _hostEnvironment = hostEnvironment;
         }
 
         public IConfiguration Configuration { get; }
@@ -39,8 +35,8 @@ namespace KingdomCommunication.API
             {
                 configuration.RootPath = "ClientApp/build";
             });
-
-            services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            var connectionstring = DatabaseConfigurations.DatabaseConnectionString(_hostEnvironment, Configuration);
+            services.AddDbContext<DataContext>(options => options.UseNpgsql(connectionstring));
             services.AddIdentityConfiguring();
             services.DInjections();
             services.AddConfigureSettings(Configuration);
@@ -56,7 +52,7 @@ namespace KingdomCommunication.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext context)
         {
             if (env.IsDevelopment())
             {
@@ -72,6 +68,7 @@ namespace KingdomCommunication.API
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            context.Database.EnsureCreated();
 
             app.UseRouting();
             app.UseAuthentication();

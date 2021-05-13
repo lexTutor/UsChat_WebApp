@@ -1,9 +1,9 @@
 C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.Models\bin\Debug\netcoreapp3.1\UsApplication.Models.deps.json
 C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.Models\bin\Debug\netcoreapp3.1\UsApplication.Models.dll
 C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.Models\bin\Debug\netcoreapp3.1\UsApplication.Models.pdb
+C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.Models\obj\Debug\netcoreapp3.1\UsApplication.Models.csprojAssemblyReference.cache
 C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.Models\obj\Debug\netcoreapp3.1\UsApplication.Models.AssemblyInfoInputs.cache
 C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.Models\obj\Debug\netcoreapp3.1\UsApplication.Models.AssemblyInfo.cs
 C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.Models\obj\Debug\netcoreapp3.1\UsApplication.Models.csproj.CoreCompileInputs.cache
 C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.Models\obj\Debug\netcoreapp3.1\UsApplication.Models.dll
 C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.Models\obj\Debug\netcoreapp3.1\UsApplication.Models.pdb
-C:\Users\hp\source\repos\KingdomCommunication.API\UsApplication.Models\obj\Debug\netcoreapp3.1\UsApplication.Models.csprojAssemblyReference.cache

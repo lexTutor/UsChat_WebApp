@@ -4,13 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MainListItems from './Networking';
@@ -23,115 +21,14 @@ import UserDetails from './UserDetails';
 import { useParams, useHistory } from 'react-router-dom';
 import { Card, TextField, Button } from '@material-ui/core';
 import ChatDiv from '../StyledComponents/ChatDiv';
-//import AuthContext from './AuthContext';
+import Alert from '@material-ui/lab/Alert';
 import * as signalR from "@microsoft/signalr";
+import { useStyles} from './Styles';
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-      </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
 
-    card: {
-        padding: "100px",
-        marginLeft: "auto",
-        marginRight: "auto",
-        marginTop: "10px",
-        backgroundColor: "white",
-    },
-    button: {
-        marginLeft: "20px",
-        marginTop: "30px",
-        alignSelf: "center",
-    },
-    root: {
-        display: 'flex',
-    },
-    toolbar: {
-        paddingRight: 24, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginRight: 36,
-    },
-    menuButtonHidden: {
-        display: 'none',
-    },
-    title: {
-        flexGrow: 1,
-    },
-    drawerPaper: {
-        position: 'relative',
-        whiteSpace: 'nowrap',
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerPaperClose: {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9),
-        },
-    },
-    appBarSpacer: theme.mixins.toolbar,
-    content: {
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
-    },
-    container: {
-        paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
-    },
-    paper: {
-        padding: theme.spacing(2),
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-    },
-    fixedHeight: {
-        height: 240,
-    },
-}));
 
 export default function Dashboard() {
     const classes = useStyles();
@@ -143,8 +40,8 @@ export default function Dashboard() {
     const [chatWith, setChatWith] = React.useState("");
     const { Id } = useParams();
     const [recieved, setrecieved] = React.useState(null);
+    const [notification, setNotification] = React.useState(null);
     const history = useHistory();
-    //const { isAuthenticated, SetAuthenticated } = useContext(AuthContext);
     const hubConnection = new signalR.HubConnectionBuilder().withUrl(`/ChatHub/${Id}`,
         {
             accessTokenFactory: () => {
@@ -181,11 +78,19 @@ export default function Dashboard() {
 
     useEffect(() => {
 
-        if (recieved !== null) {
-            console.log("recieved")
-            let msgs = [...messages];
-            msgs.push(recieved)
-            setMessages(msgs);
+        if (recieved !== null)
+        {
+            if (recieved.userFromId === chatWith || recieved.userToId === chatWith)
+            {
+                let msgs = [...messages];
+                msgs.push(recieved)
+                setMessages(msgs);
+            }
+            else
+            {
+                console.log("recievedmsg", recieved)
+                setNotification({ UserName: recieved.username, Message: recieved.messageDetails });
+            }
         }
     }, [recieved])
 
@@ -231,8 +136,6 @@ export default function Dashboard() {
                 return;
             }
             else {
-                let nm = [...messages];
-                nm.push(data.data);
                 setMessages(data.data);
             }
         });
@@ -264,7 +167,7 @@ export default function Dashboard() {
 
     const SendMessage = () => {
         if (chatWith !== "" && chatWith !== null) {
-            let obj = { userFromId: Id, userToId: chatWith, MessageDetails: newMessage }
+            let obj = { userFromId: Id, userToId: chatWith, MessageDetails: newMessage, username: Data.username }
             fetch(`message/add/${Id}`, {
                 method: "POST",
                 headers: {
@@ -294,8 +197,8 @@ export default function Dashboard() {
         setrecieved(message);
     });
 
+
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    //onLoad={() => SetAuthenticated(true)}
     return (
         <div className={classes.root} >
             <CssBaseline />
@@ -324,18 +227,16 @@ export default function Dashboard() {
                     <ListItemText primary="My Network" />
                 </ListItem>
 
-                {Data.connections && <List>{Data.connections.map((data) => (
-                    <ListItem key={data.userId_To} >
+
+                {Data.connections && <List>{Data.connections.map((data, index) => (
+                    <ListItem key={index} >
                         <ListItemIcon>
                             <PersonIcon />
                         </ListItemIcon>
                         {(Data.username.toLowerCase() !== data.userName_To.toLowerCase()) &&
-                            <ListItemText primary={data.userName_To} onClick={() => handleConnect(data.userId_To, data.userId_From)}></ListItemText>}
+                            <ListItemText primary={data.userName_To} onClick={() => handleConnect(data.userId_To, data.userId_From)} className={classes.cursor}></ListItemText>}
                         {(Data.username.toLowerCase() !== data.userName_From.toLowerCase()) &&
-                            <ListItemText primary={data.userName_From} onClick={() => handleConnect(data.userId_To, data.userId_From)}></ListItemText>}
-                        {console.log(Data.userName)}
-                        {console.log(data.userName_To)}
-                        {console.log(data.userName_From)}
+                            <ListItemText primary={data.userName_From} onClick={() => handleConnect(data.userId_To, data.userId_From)} className={classes.cursor}></ListItemText>}
                     </ListItem>
                 ))}</List>}
                 <Divider />
@@ -345,9 +246,10 @@ export default function Dashboard() {
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3} className={classes.root} style={{ justifyContent: "space-between" }}>
                         <Grid>
+                            {(notification) && <Alert severity="info">New Message <p>{notification.UserName + " : " + notification.Message}</p></Alert>}
                             <Card visibility="hidden" id="msgCard" className={classes.card}>
-                                {messages.map((msg) => (
-                                    <ChatDiv key={msg.userFromId} main={msg.userFromId === Id ? 1 : 2}>
+                                {messages.map((msg, index) => (
+                                    <ChatDiv key={index} main={msg.userFromId === Id ? 1 : 2}>
                                         {msg.messageDetails}
                                     </ChatDiv>
                                 ))}
@@ -372,8 +274,8 @@ export default function Dashboard() {
                             </Card>
                         </Grid>
                         <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper} style={{ width: "200px", height: "400px" }}>
-                                <UserDetails data={Data} OnReload={handleReload}/>
+                            <Paper className={fixedHeightPaper} style={{ width: "200px", height: "400px"}}>
+                                <UserDetails data={Data} OnReload={handleReload} />
                             </Paper>
                         </Grid>
                     </Grid>
